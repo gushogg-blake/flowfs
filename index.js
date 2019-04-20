@@ -8,11 +8,7 @@ class Node {
 	}
 	
 	get parent() {
-		if (this.isRoot) {
-			return this;
-		} else {
-			return new Node(path.resolve(this.fullPath, ".."));
-		}
+		return new Node(path.resolve(this.fullPath, ".."));
 	}
 	
 	child(filePath) {
