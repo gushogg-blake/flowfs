@@ -1,5 +1,5 @@
 {
-	"name": "fs",
+	"name": "qfs",
 	"version": "1.0.0",
 	"description": "Sane filesystem abstraction",
 	"author": "Gus Hogg-Blake <gus@hogg-blake.uk>",
