@@ -1,5 +1,6 @@
 let fs = require("fs-extra");
 let path = require("path");
+let _typeof = require("./typeof");
 
 class Node {
 	constructor(filePath) {
@@ -45,7 +46,7 @@ class Node {
 		return (this.fullPath.indexOf(parent) === 0) && (this.fullPath.length > parent.length);
 	}
 	
-	await mkdirs() {
+	mkdirs() {
 		return 123; // TODO add this (find a mkdirs that supports promises)
 	}
 	
@@ -128,10 +129,6 @@ class Node {
 	
 	writeJson(json) {
 		return this.write(JSON.stringify(json, null, 4));
-	}
-	
-	replace(find, replace) {
-		return this.write(await this.read().replace(find, replace));
 	}
 	
 	read() {
