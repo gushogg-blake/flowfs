@@ -4,6 +4,6 @@
 	"description": "Sane filesystem abstraction",
 	"author": "Gus Hogg-Blake <gus@hogg-blake.uk>",
 	"dependencies": {
-		"fs-extra": "*"
+		"fs-extra": "^7.0.1"
 	}
 }

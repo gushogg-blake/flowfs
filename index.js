@@ -155,10 +155,6 @@ class Node {
 	}
 }
 
-module.exports = (filePath) => {
-	if (!filePath) {
-		filePath = process.cwd();
-	}
-	
+module.exports = (filePath=process.cwd()) => {
 	return new Node(filePath);
 };
