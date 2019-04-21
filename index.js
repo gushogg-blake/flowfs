@@ -127,8 +127,8 @@ class Node {
 		return this.write(JSON.stringify(json, null, 4));
 	}
 	
-	read() {
-		return fs.readFile(this.fullPath .toString());
+	async read() {
+		return (await fs.readFile(this.fullPath)).toString();
 	}
 	
 	write(data) {
