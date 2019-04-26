@@ -1,6 +1,7 @@
 let fs = require("fs-extra");
 let path = require("path");
 let _typeof = require("./typeof");
+let es = require("event-stream");
 
 class Node {
 	constructor(filePath) {
@@ -31,7 +32,36 @@ class Node {
 		return path.relative(parent.fullPath, this.fullPath);
 	}
 	
-	// is the Node somewhere inside (a descendant of) parent?
+	lines() {
+		return fs.createReadStream(this.fullPath).pipe(es.split());
+	}
+	
+	head() {
+		return new Promise((resolve, reject) => {
+			let lines = this.lines();
+			let done = false;
+			
+			lines.on("data", (line) => {
+				done = true;
+				lines.destroy();
+				resolve(line);
+			});
+			
+			lines.on("error", () => {
+				if (!done) {
+					reject(e);
+				}
+			});
+			
+			lines.on("close", () => {
+				if (!done) {
+					resolve(null);
+				}
+			});
+		});
+	}
+	
+	// is the Node a descendant of parent?
 	within(parent) {
 		if (parent.fullPath) {
 			parent = parent.fullPath;
@@ -40,10 +70,6 @@ class Node {
 		parent = parent.replace(/\/$/, "");
 		
 		return (this.fullPath.indexOf(parent) === 0) && (this.fullPath.length > parent.length);
-	}
-	
-	mkdirs() {
-		return 123; // TODO add this (find a mkdirs that supports promises)
 	}
 	
 	setPath(filePath) {
@@ -95,8 +121,8 @@ class Node {
 		return fs.readdir(this.fullPath);
 	}
 	
-	ls() {
-		return 123; // TODO [new Node path.resolve @fullPath, name for name in @await readdir()]
+	async ls() {
+		return (await this.readdir()).map(path => new Node(path.resolve(this.fullPath, path)));
 	}
 	
 	async contains(filename) {

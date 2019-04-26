@@ -1,9 +1,10 @@
 {
-	"name": "qfs",
+	"name": "flowfs",
 	"version": "1.0.0",
-	"description": "Sane filesystem abstraction",
+	"description": "Filesystem abstraction that attempts to not block your flow",
 	"author": "Gus Hogg-Blake <gus@hogg-blake.uk>",
 	"dependencies": {
-		"fs-extra": "^7.0.1"
+		"fs-extra": "^7.0.1",
+		"event-stream": "^4.0.1"
 	}
 }
