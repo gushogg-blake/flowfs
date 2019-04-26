@@ -36,7 +36,7 @@ class Node {
 		return fs.createReadStream(this.fullPath).pipe(es.split());
 	}
 	
-	head() {
+	get head() {
 		return new Promise((resolve, reject) => {
 			let lines = this.lines();
 			let done = false;
@@ -47,7 +47,7 @@ class Node {
 				resolve(line);
 			});
 			
-			lines.on("error", () => {
+			lines.on("error", (e) => {
 				if (!done) {
 					reject(e);
 				}
