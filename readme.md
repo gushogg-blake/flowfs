@@ -21,7 +21,7 @@ function include (templatePath, includePath) {
 ... you would do this:
 
 ```javascript
-// new, infinitely better, fluent, satisfying, intuitive, easy-to-remember flowfs way:
+// new, infinitely better way:
 
 const fs = require("flowfs");
 
