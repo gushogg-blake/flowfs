@@ -6,6 +6,8 @@ I wrote flowfs because I could never remember the names and signatures of the `f
 flowfs attempts to solve these issues by exposing an intuitive API that represents files as objects.  Navigation between nodes is via properties; for example, if you're implementing an "include" directive for a template language and need to calculate a relative path -- instead of this:
 
 ```javascript
+// old, bad, awkward, error-prone, annoying, hard-to-remember way:
+
 const fs = require("fs");
 const path = require("path");
 
@@ -19,6 +21,8 @@ function include (templatePath, includePath) {
 ... you would do this:
 
 ```javascript
+// new, infinitely better, fluent, satisfying, intuitive, easy-to-remember flowfs way:
+
 const fs = require("flowfs");
 
 function include (templatePath, includePath) {
