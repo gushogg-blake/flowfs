@@ -26,7 +26,7 @@ function include (templatePath, includePath) {
 }
 ```
 
-Instantiating and navigating between nodes doesn't do any IO, it just does string manipulation internally -- `fs("/path/to/non-existent/file")` is perfectly valid, and the recommended way to create new files with flowfs, for example:
+Instantiating and navigating between nodes doesn't do any IO, it just does string manipulation internally -- `fs("/path/to/non-existent/file")` is perfectly valid, and is the recommended way to create new files with flowfs, for example:
 
 ```javascript
 await fs("/new/file").write("some data");
