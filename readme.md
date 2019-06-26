@@ -14,7 +14,7 @@ const path = require("path");
 function include (templatePath, includePath) {
 	let parent = fs.dirname(templatePath);
 	
-	return path.resolve(parent, includePath);
+	return path.resolve(parent, includePath); // or something
 }
 ```
 
