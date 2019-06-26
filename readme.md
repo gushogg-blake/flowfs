@@ -1,7 +1,7 @@
 flowfs
 ======
 
-I developed flowfs because I could never remember the names and signatures of the `fs` API, and because manipulating paths as strings is awkward and error-prone.
+I developed flowfs because I could never remember the names and signatures of the `fs` and related APIs, and because manipulating paths as strings is awkward and error-prone.  Dealing with files was always a point where I would be knocked out of the zone by having to refer to docs, and run throwaway tests to make sure I was doing it right.
 
 flowfs attempts to solve both of these by providing an intuitive API that represents files as objects.  Navigation between nodes is via properties; for example, if you're implementing an `include` directive for a template language and need to calculate a relative path -- instead of this:
 
