@@ -21,12 +21,12 @@ function include (templatePath, includePath) {
 ... you would do this:
 
 ```javascript
-// new, infinitely better way:
+// flowfs way:
 
 const fs = require("flowfs");
 
 function include (templatePath, includePath) {
-	return fs(templatePath).parent.child(includePath).fullPath;
+	return fs(templatePath).parent.child(includePath).path;
 }
 ```
 

@@ -1,27 +1,28 @@
 let fs = require("fs-extra");
-let path = require("path");
+let osPath = require("path");
 let _typeof = require("./typeof");
 let es = require("event-stream");
+let glob = require("glob");
 
 class Node {
-	constructor(filePath) {
-		this.setPath(filePath);
+	constructor(path) {
+		this.setPath(path);
 	}
 	
 	get parent() {
-		return new Node(path.resolve(this.fullPath, ".."));
+		return new Node(osPath.resolve(this.path, ".."));
 	}
 	
-	child(filePath) {
-		return this.rel(filePath);
+	child(path) {
+		return this.rel(path);
 	}
 	
-	rel(filePath) {
-		return new Node(path.resolve(this.fullPath, filePath));
+	rel(path) {
+		return new Node(osPath.resolve(this.path, path));
 	}
 	
-	sibling(filePath) {
-		return this.parent.child(filePath);
+	sibling(path) {
+		return this.parent.child(path);
 	}
 	
 	pathFrom(parent) {
@@ -29,11 +30,11 @@ class Node {
 			parent = new Node(parent);
 		}
 		
-		return path.relative(parent.fullPath, this.fullPath);
+		return osPath.relative(parent.path, this.path);
 	}
 	
 	lines() {
-		return fs.createReadStream(this.fullPath).pipe(es.split());
+		return fs.createReadStream(this.path).pipe(es.split());
 	}
 	
 	get head() {
@@ -63,18 +64,18 @@ class Node {
 	
 	// is the Node a descendant of parent?
 	within(parent) {
-		if (parent.fullPath) {
-			parent = parent.fullPath;
+		if (parent.path) {
+			parent = parent.path;
 		}
 		
 		parent = parent.replace(/\/$/, "");
 		
-		return (this.fullPath.indexOf(parent) === 0) && (this.fullPath.length > parent.length);
+		return this.path.indexOf(parent) === 0 && this.path.length > parent.length;
 	}
 	
-	setPath(filePath) {
-		this.fullPath = path.resolve(filePath);
-		this.name = path.basename(this.fullPath);
+	setPath(path) {
+		this.path = osPath.resolve(path);
+		this.name = osPath.basename(this.path);
 		
 		let extIndex = this.name.indexOf(".", 1);
 		let hasExt = extIndex !== -1;
@@ -82,16 +83,14 @@ class Node {
 		this.basename = hasExt ? this.name.substr(0, extIndex) : this.name;
 		this.extension = hasExt ? this.name.substr(extIndex) : "";
 		this.type = this.extension.substr(1);
-		
-		this.isRoot = this.fullPath === "/";
 	}
 	
 	stat() {
-		return fs.stat(this.fullPath);
+		return fs.stat(this.path);
 	}
 	
 	lstat() {
-		return fs.lstat(this.fullPath);
+		return fs.lstat(this.path);
 	}
 	
 	async delete() {
@@ -111,18 +110,32 @@ class Node {
 			newPath = find;
 		}
 		
-		newPath = this.sibling(newPath).fullPath;
-		await fs.rename(this.fullPath, newPath);
+		newPath = this.sibling(newPath).path;
+		await fs.rename(this.path, newPath);
 		
 		this.setPath(newPath);
 	}
 	
 	readdir() {
-		return fs.readdir(this.fullPath);
+		return fs.readdir(this.path);
 	}
 	
 	async ls() {
-		return (await this.readdir()).map(path => new Node(path.resolve(this.fullPath, path)));
+		return (await this.readdir()).map((path) => {
+			return new Node(osPath.resolve(this.path, path));
+		});
+	}
+	
+	async glob(pattern, options) {
+		return await new Promise((resolve, reject) => {
+			glob(osPath.resolve(this.path, pattern), options, (e, files) => {
+				if (e) {
+					reject(e);
+				} else {
+					resolve(files.map(file => this.child(file)));
+				}
+			});
+		});
 	}
 	
 	async contains(filename) {
@@ -131,7 +144,7 @@ class Node {
 	
 	async isDir() {
 		try {
-			return (await fs.stat(this.fullPath)).isDirectory();
+			return (await fs.stat(this.path)).isDirectory();
 		} catch (e) {
 			return false;
 		}
@@ -139,7 +152,7 @@ class Node {
 	
 	async isFile() {
 		try {
-			return (await fs.stat(this.fullPath)).isFile();
+			return (await fs.stat(this.path)).isFile();
 		} catch (e) {
 			return false;
 		}
@@ -154,26 +167,26 @@ class Node {
 	}
 	
 	async read() {
-		return (await fs.readFile(this.fullPath)).toString();
+		return (await fs.readFile(this.path)).toString();
 	}
 	
 	write(data) {
-		return fs.writeFile(this.fullPath, data);
+		return fs.writeFile(this.path, data);
 	}
 	
 	exists() {
-		return fs.exists(this.fullPath);
+		return fs.exists(this.path);
 	}
 	
 	rmdir() {
-		return fs.rmdir(this.fullPath);
+		return fs.rmdir(this.path);
 	}
 	
 	unlink() {
-		return fs.unlink(this.fullPath);
+		return fs.unlink(this.path);
 	}
 }
 
-module.exports = (filePath=process.cwd()) => {
-	return new Node(filePath);
+module.exports = (path=process.cwd()) => {
+	return new Node(path);
 };
