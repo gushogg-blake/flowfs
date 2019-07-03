@@ -9,6 +9,10 @@ class Node {
 		this.setPath(path);
 	}
 	
+	get isRoot() {
+		return this.path === this.parent.path;
+	}
+	
 	get parent() {
 		return new Node(osPath.resolve(this.path, ".."));
 	}
