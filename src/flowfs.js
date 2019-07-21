@@ -27,7 +27,7 @@ module.exports = function(opts) {
 		}
 		
 		rel(path) {
-			return new Node(osPath.resolve(this.path, path));
+			return new Node(osPath.resolve(this.path, path.toString()));
 		}
 		
 		sibling(path) {
@@ -35,11 +35,11 @@ module.exports = function(opts) {
 		}
 		
 		pathFrom(parent) {
-			if (typeof parent === "string") {
-				parent = new Node(parent);
+			if (parent.path) {
+				parent = parent.path;
 			}
 			
-			return osPath.relative(parent.path, this.path);
+			return osPath.relative(parent, this.path);
 		}
 		
 		async mkdirp() {
@@ -87,7 +87,7 @@ module.exports = function(opts) {
 		}
 		
 		setPath(path) {
-			this.path = osPath.resolve(path);
+			this.path = osPath.resolve(path.toString());
 			this.name = osPath.basename(this.path);
 			
 			let extIndex = this.name.indexOf(".", 1);
