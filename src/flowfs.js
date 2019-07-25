@@ -22,8 +22,14 @@ module.exports = function(opts) {
 			return new Node(osPath.resolve(this.path, ".."));
 		}
 		
-		child(path) {
-			return this.rel(path);
+		child(...paths) {
+			let node = this;
+			
+			for (let path of paths) {
+				node = node.rel(path);
+			}
+			
+			return node;
 		}
 		
 		rel(path) {
@@ -123,10 +129,15 @@ module.exports = function(opts) {
 				newPath = find;
 			}
 			
-			newPath = this.sibling(newPath).path;
-			await fs.rename(this.path, newPath);
+			let newFile = this.sibling(newPath);
 			
-			this.setPath(newPath);
+			if (options.mkdirp) {
+				await newFile.parent.mkdirp();
+			}
+			
+			await fs.rename(this.path, newFile.path);
+			
+			this.setPath(newFile.path);
 		}
 		
 		async move(dest) {
@@ -208,7 +219,13 @@ module.exports = function(opts) {
 		}
 	}
 	
-	return function(path=process.cwd()) {
-		return new Node(path);
+	return function(path=process.cwd(), ...paths) {
+		let node = new Node(path);
+		
+		for (let path of paths) {
+			node = node.child(path);
+		}
+		
+		return node;
 	}
 }

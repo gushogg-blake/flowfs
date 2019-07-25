@@ -1,6 +1,6 @@
 {
 	"name": "flowfs",
-	"version": "3.3.0",
+	"version": "3.4.0",
 	"description": "Filesystem abstraction that attempts to not block your flow",
 	"author": "Gus Hogg-Blake <gus@hogg-blake.uk>",
 	"dependencies": {
@@ -10,5 +10,8 @@
 		"mkdirp": "^0.5.1",
 		"mkdirp-promise": "^5.0.1",
 		"remove": "^0.1.5"
+	},
+	"devDependencies": {
+		"mocha": "^6.2.0"
 	}
 }
