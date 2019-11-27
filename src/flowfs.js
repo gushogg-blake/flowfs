@@ -40,6 +40,10 @@ module.exports = function(opts) {
 			return this.parent.child(path);
 		}
 		
+		reExt(newExtension) {
+			return this.sibling(this.basename + "." + newExtension);
+		}
+		
 		pathFrom(parent) {
 			if (parent.path) {
 				parent = parent.path;
