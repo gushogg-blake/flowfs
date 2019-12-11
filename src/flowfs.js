@@ -11,6 +11,10 @@ module.exports = function(opts) {
 	
 	class Node {
 		constructor(path) {
+			if (path instanceof Node) {
+				path = path.path;
+			}
+			
 			this.setPath(path);
 		}
 		
@@ -44,8 +48,12 @@ module.exports = function(opts) {
 			return this.sibling(this.basename + "." + newExtension);
 		}
 		
+		reparent(currentParent, newParent) {
+			return new Node(newParent).rel(this.pathFrom(currentParent));
+		}
+		
 		pathFrom(parent) {
-			if (parent.path) {
+			if (parent instanceof Node) {
 				parent = parent.path;
 			}
 			
@@ -87,7 +95,7 @@ module.exports = function(opts) {
 		
 		// is the Node a descendant of parent?
 		within(parent) {
-			if (parent.path) {
+			if (parent instanceof Node) {
 				parent = parent.path;
 			}
 			
