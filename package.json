@@ -1,6 +1,6 @@
 {
 	"name": "flowfs",
-	"version": "3.5.0",
+	"version": "3.6.0",
 	"description": "Filesystem abstraction that attempts to not block your flow",
 	"author": "Gus Hogg-Blake <gus@hogg-blake.uk>",
 	"dependencies": {

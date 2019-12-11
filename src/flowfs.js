@@ -229,6 +229,10 @@ module.exports = function(opts) {
 		unlink() {
 			return fs.unlink(this.path);
 		}
+		
+		rmrf() {
+			return fs.remove(this.path);
+		}
 	}
 	
 	return function(path=process.cwd(), ...paths) {
