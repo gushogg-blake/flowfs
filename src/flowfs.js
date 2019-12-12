@@ -48,6 +48,10 @@ module.exports = function(opts) {
 			return this.sibling(this.basename + "." + newExtension);
 		}
 		
+		withExt(newExtension) {
+			return this.sibling(this.name + newExtension);
+		}
+		
 		reparent(currentParent, newParent) {
 			return new Node(newParent).rel(this.pathFrom(currentParent));
 		}
