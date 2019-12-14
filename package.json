@@ -1,6 +1,6 @@
 {
 	"name": "flowfs",
-	"version": "3.7.1",
+	"version": "3.7.2",
 	"description": "Filesystem abstraction that attempts to not block your flow",
 	"dependencies": {
 		"event-stream": "^4.0.1",
