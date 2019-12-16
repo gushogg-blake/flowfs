@@ -45,11 +45,19 @@ module.exports = function(opts) {
 		}
 		
 		reExt(newExtension) {
-			return this.sibling(this.basename + "." + newExtension);
+			if (newExtension[0] !== ".") {
+				newExtension = "." + newExtension;
+			}
+			
+			return this.sibling(this.basename + newExtension);
 		}
 		
 		withExt(newExtension) {
 			return this.sibling(this.name + newExtension);
+		}
+		
+		withoutExt() {
+			return this.sibling(this.basename);
 		}
 		
 		reparent(currentParent, newParent) {
