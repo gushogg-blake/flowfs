@@ -1,11 +1,12 @@
 {
 	"name": "flowfs",
-	"version": "3.8.0",
+	"version": "3.9.0",
 	"description": "Filesystem abstraction that attempts to not block your flow",
 	"dependencies": {
 		"event-stream": "^4.0.1",
 		"fs-extra": "^7.0.1",
 		"glob": "^7.1.4",
+		"minimatch": "^3.0.4",
 		"mkdirp-promise": "^5.0.1",
 		"remove": "^0.1.5"
 	},

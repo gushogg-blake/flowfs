@@ -2,6 +2,7 @@ let fs = require("fs-extra");
 let osPath = require("path");
 let es = require("event-stream");
 let glob = require("glob");
+let minimatch = require("minimatch");
 let mkdirp = require("mkdirp-promise");
 
 module.exports = function(opts) {
@@ -114,6 +115,10 @@ module.exports = function(opts) {
 			parent = parent.replace(/\/$/, "");
 			
 			return this.path.indexOf(parent) === 0 && this.path.length > parent.length;
+		}
+		
+		match(pattern) {
+			return minimatch(this.path, pattern);
 		}
 		
 		setPath(path) {
