@@ -1,4 +1,3 @@
-let a = require("assert");
 let {is, deep} = require("./testUtils/assertions");
 let fs = require("..");
 let mkdirp = require("../mkdirp");

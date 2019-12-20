@@ -4,6 +4,7 @@ let es = require("event-stream");
 let glob = require("glob");
 let minimatch = require("minimatch");
 let mkdirp = require("mkdirp-promise");
+let bluebird = require("bluebird");
 
 module.exports = function(opts) {
 	let options = Object.assign({
@@ -181,6 +182,14 @@ module.exports = function(opts) {
 			return (await this.readdir()).map((path) => {
 				return new Node(osPath.resolve(this.path, path));
 			});
+		}
+		
+		async lsFiles() {
+			return bluebird.filter(this.ls(), node => node.isFile());
+		}
+		
+		async lsDirs() {
+			return bluebird.filter(this.ls(), node => node.isDir());
 		}
 		
 		async glob(pattern, options) {
