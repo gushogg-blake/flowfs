@@ -174,6 +174,14 @@ module.exports = function(opts) {
 			await this.rename(dest);
 		}
 		
+		async copy(dest) {
+			if (dest instanceof Node) {
+				dest = dest.path;
+			}
+			
+			await fs.copy(this.path, dest);
+		}
+		
 		readdir() {
 			return fs.readdir(this.path);
 		}

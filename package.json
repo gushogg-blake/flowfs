@@ -1,6 +1,6 @@
 {
 	"name": "flowfs",
-	"version": "3.10.0",
+	"version": "3.11.0",
 	"description": "Filesystem abstraction that attempts to not block your flow",
 	"dependencies": {
 		"bluebird": "^3.7.2",
@@ -13,5 +13,8 @@
 	},
 	"devDependencies": {
 		"mocha": "^6.2.0"
+	},
+	"scripts": {
+		"test": "./node_modules/mocha/bin/mocha test/**/*.test.js"
 	}
 }
