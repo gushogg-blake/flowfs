@@ -142,12 +142,26 @@ module.exports = function(opts) {
 			return fs.lstat(this.path);
 		}
 		
-		async delete() {
-			if (await this.isDir()) {
-				return this.rmdir();
-			} else {
-				return this.unlink();
+		async _delete(ignoreEnoent=false) {
+			try {
+				if (await this.isDir()) {
+					await this.rmdir();
+				} else {
+					await this.unlink();
+				}
+			} catch (e) {
+				if (!ignoreEnoent || e.code !== "ENOENT") {
+					throw e;
+				}
 			}
+		}
+		
+		delete() {
+			return this._delete();
+		}
+		
+		deleteIfExists() {
+			return this._delete(true);
 		}
 		
 		async rename(find, replace) {
