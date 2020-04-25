@@ -3,7 +3,7 @@ let osPath = require("path");
 let es = require("event-stream");
 let glob = require("glob");
 let minimatch = require("minimatch");
-let mkdirp = require("mkdirp-promise");
+let mkdirp = require("mkdirp");
 let bluebird = require("bluebird");
 
 module.exports = function(opts) {
