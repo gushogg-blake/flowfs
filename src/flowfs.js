@@ -1,7 +1,6 @@
 let fs = require("fs-extra");
 let osPath = require("path");
 let es = require("event-stream");
-let glob = require("glob");
 let minimatch = require("minimatch");
 let mkdirp = require("mkdirp");
 let bluebird = require("bluebird");
@@ -42,8 +41,8 @@ module.exports = function(opts) {
 			return new Node(osPath.resolve(this.path, path.toString()));
 		}
 		
-		sibling(path) {
-			return this.parent.child(path);
+		sibling(...paths) {
+			return this.parent.child(...paths);
 		}
 		
 		reExt(newExtension) {
@@ -212,18 +211,6 @@ module.exports = function(opts) {
 		
 		async lsDirs() {
 			return bluebird.filter(this.ls(), node => node.isDir());
-		}
-		
-		async glob(pattern, options) {
-			return await new Promise((resolve, reject) => {
-				glob(osPath.resolve(this.path, pattern), options, (e, files) => {
-					if (e) {
-						reject(e);
-					} else {
-						resolve(files.map(file => this.child(file)));
-					}
-				});
-			});
 		}
 		
 		async contains(filename) {
