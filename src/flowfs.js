@@ -126,7 +126,7 @@ module.exports = function(opts) {
 			this.name = osPath.basename(this.path);
 			
 			if (this.name[0] === ".") {
-				let name = this.name.susbtr(1);
+				let name = this.name.substr(1);
 				
 				let extIndex = name.indexOf(".");
 				let lastExtIndex = name.lastIndexOf(".");
