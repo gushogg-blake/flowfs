@@ -125,12 +125,29 @@ module.exports = function(opts) {
 			this.path = osPath.resolve(path.toString());
 			this.name = osPath.basename(this.path);
 			
-			let extIndex = this.name.indexOf(".", 1);
-			let hasExt = extIndex !== -1;
-			
-			this.basename = hasExt ? this.name.substr(0, extIndex) : this.name;
-			this.extension = hasExt ? this.name.substr(extIndex) : "";
-			this.type = this.extension.substr(1);
+			if (this.name[0] === ".") {
+				let name = this.name.susbtr(1);
+				
+				let extIndex = name.indexOf(".");
+				let lastExtIndex = name.lastIndexOf(".");
+				let hasExt = extIndex !== -1;
+				
+				this.basename = this.name;
+				this.extension = hasExt ? name.substr(extIndex) : "";
+				this.type = this.extension.substr(1);
+				this.lastExtension = hasExt ? name.substr(lastExtIndex) : "";
+				this.lastType = this.lastExtension.substr(1);
+			} else {
+				let extIndex = this.name.indexOf(".");
+				let lastExtIndex = this.name.lastIndexOf(".");
+				let hasExt = extIndex !== -1;
+				
+				this.basename = hasExt ? this.name.substr(0, extIndex) : this.name;
+				this.extension = hasExt ? this.name.substr(extIndex) : "";
+				this.type = this.extension.substr(1);
+				this.lastExtension = hasExt ? this.name.substr(lastExtIndex) : "";
+				this.lastType = this.lastExtIndex.substr(1);
+			}
 		}
 		
 		stat() {
