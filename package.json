@@ -1,6 +1,6 @@
 {
 	"name": "flowfs",
-	"version": "5.0.1",
+	"version": "5.1.0",
 	"description": "Filesystem abstraction that attempts to not block your flow",
 	"dependencies": {
 		"bluebird": "^3.7.2",
