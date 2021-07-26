@@ -146,7 +146,7 @@ module.exports = function(opts) {
 				this.extension = hasExt ? this.name.substr(extIndex) : "";
 				this.type = this.extension.substr(1);
 				this.lastExtension = hasExt ? this.name.substr(lastExtIndex) : "";
-				this.lastType = this.lastExtIndex.substr(1);
+				this.lastType = this.lastExtension.substr(1);
 			}
 		}
 		
